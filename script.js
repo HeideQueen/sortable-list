@@ -2,11 +2,11 @@ const draggableList = document.getElementById('draggable-list');
 const check = document.getElementById('check');
 
 const vTubers = [
-  'Usada Pekora',
   'Suzuhara Lulu',
-  'Ookami Mio',
-  'Inugami Korone',
+  'Usada Pekora',
   'Nakiri Ayame',
+  'Inugami Korone',
+  'Ookami Mio',
   'Nekomata Okayu',
   'Houshou Marine',
   'Amane Kanata',
@@ -74,12 +74,26 @@ function dragLeave() {
   this.classList.remove('over');
 }
 
+// swap items that are drap and drop
 function swapItems(fromIndex, toIndex) {
   const itemOne = listItems[fromIndex].querySelector('.draggable');
   const itemTwo = listItems[toIndex].querySelector('.draggable');
 
   listItems[fromIndex].appendChild(itemTwo);
   listItems[toIndex].appendChild(itemOne);
+}
+
+// check order of list items
+function checkOrder() {
+  listItems.forEach((item, index) => {
+    const vtuberName = item.querySelector('.draggable').innerText.trim();
+
+    if (vtuberName !== vTubers[index]) {
+      item.classList.add('wrong');
+    } else {
+      item.classList.add('right');
+    }
+  });
 }
 
 function addEventListeners() {
@@ -97,3 +111,5 @@ function addEventListeners() {
     item.addEventListener('dragleave', dragLeave);
   });
 }
+
+check.addEventListener('click', checkOrder);
