@@ -23,12 +23,19 @@ createList();
 
 // insert list items into DOM
 function createList() {
-  [...vTubers].forEach((vTuber, index) => {
-    const listItem = document.createElement('li');
+  [...vTubers]
+    .map((vTuber) => ({
+      value: vTuber,
+      sort: Math.random(),
+    }))
+    .sort((a, b) => a.sort - b.sort)
+    .map((a) => a.value)
+    .forEach((vTuber, index) => {
+      const listItem = document.createElement('li');
 
-    listItem.setAttribute('data-index', index);
+      listItem.setAttribute('data-index', index);
 
-    listItem.innerHTML = `
+      listItem.innerHTML = `
       <span class='number'>${index + 1}</span>
       <div class='draggable' draggable='true'>
         <p class='vtuber-name'>${vTuber}</p>
@@ -36,8 +43,8 @@ function createList() {
       </div>
     `;
 
-    listItems.push(listItem);
+      listItems.push(listItem);
 
-    draggableList.appendChild(listItem);
-  });
+      draggableList.appendChild(listItem);
+    });
 }
